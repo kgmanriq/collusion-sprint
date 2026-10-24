@@ -108,6 +108,14 @@ def bootstrap_difference(group_1, group_2):
     return group_1.mean() - group_2.mean(), low, high
 
 
+def bootstrap_mean(values):
+    """Mean of one group and its 95% bootstrap confidence interval."""
+    values = np.array(values, dtype=float)
+    means = [rng.choice(values, size=len(values), replace=True).mean() for _ in range(RESAMPLES)]
+    low, high = np.percentile(means, [2.5, 97.5])
+    return values.mean(), low, high
+
+
 def compare(table, measure, condition_1, condition_2, label):
     values_1 = table.loc[table["condition"] == condition_1, measure].dropna()
     values_2 = table.loc[table["condition"] == condition_2, measure].dropna()
@@ -181,9 +189,24 @@ invalid.to_csv(f"{OUTPUT_FOLDER}/invalid_replies.csv")
 print("\nUnreadable replies by condition:")
 print(invalid.round(3).to_string())
 
-# H1: is sacrifice above zero? (average S per condition)
-print("\nAverage sacrifice S by condition (% of starting money):")
-print(table.groupby("condition")["S"].mean().round(2).to_string())
+# H1: is sacrifice above zero? Average S per condition with a 95% bootstrap interval,
+# plus average price distortion D per condition
+print("\nH1: sacrifice S by condition (% of starting money), and price distortion D:")
+h1_rows = []
+for condition in sorted(table["condition"].unique()):
+    rows = table[table["condition"] == condition]
+    d_mean = rows["D"].mean()
+    s_values = rows["S"].dropna()
+    if len(s_values) > 0:
+        s_mean, s_low, s_high = bootstrap_mean(s_values)
+        h1_rows.append({"condition": condition, "S": round(s_mean, 2), "S_ci_low": round(s_low, 2),
+                        "S_ci_high": round(s_high, 2), "S_above_zero": bool(s_low > 0), "D": round(d_mean, 3)})
+    else:
+        h1_rows.append({"condition": condition, "S": None, "S_ci_low": None, "S_ci_high": None,
+                        "S_above_zero": None, "D": round(d_mean, 3)})
+h1 = pd.DataFrame(h1_rows)
+h1.to_csv(f"{OUTPUT_FOLDER}/sacrifice_and_distortion_by_condition.csv", index=False)
+print(h1.to_string(index=False))
 
 # Main tests, on all markets
 results = pd.DataFrame(main_tests(table))

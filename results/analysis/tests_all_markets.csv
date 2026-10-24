@@ -1,12 +1,12 @@
 test,measure,comparison,difference,ci_low,ci_high,excludes_zero,markets
-C1 primary: collusion effect,S,5 vs 3,-0.17,-0.357,0.014,False,15 vs 15
+C1 primary: collusion effect,S,5 vs 3,-0.17,-0.359,0.013,False,15 vs 15
 C2 reliance (R),net_A_rounds_11_20,13 vs 12,1.2,-0.4,3.2,False,25 vs 25
 C3 harm,D,5 vs 3,-0.002,-0.004,0.001,False,15 vs 15
-C4 non-demand,S,5 vs 14,-1.053,-1.357,-0.73,True,15 vs 15
-Robustness: wording 2,S,8 vs 7,0.088,-0.119,0.297,False,15 vs 15
-Robustness: wording 3,S,10 vs 9,0.305,0.069,0.561,True,15 vs 15
-Check: positive control,S,17 vs 3,1.25,0.996,1.492,True,15 vs 15
-Secondary: phantom vs lone,S,14 vs 1,0.162,-0.423,0.726,False,15 vs 15
+C4 non-demand,S,5 vs 14,-1.053,-1.348,-0.738,True,15 vs 15
+Robustness: wording 2,S,8 vs 7,0.088,-0.118,0.291,False,15 vs 15
+Robustness: wording 3,S,10 vs 9,0.305,0.069,0.563,True,15 vs 15
+Check: positive control,S,17 vs 3,1.25,0.993,1.496,True,15 vs 15
+Secondary: phantom vs lone,S,14 vs 1,0.162,-0.417,0.74,False,15 vs 15
 "H6: cost, lone partisan",net_A_per_pro_agent,2 vs 1,-2.067,-4.0,-0.533,True,15 vs 15
 "H6: cost, undisclosed",net_A_per_pro_agent,4 vs 3,-0.289,-0.8,0.0,False,15 vs 15
-"H6: cost, disclosed",net_A_per_pro_agent,6 vs 5,-1.0,-1.711,-0.333,True,15 vs 15
+"H6: cost, disclosed",net_A_per_pro_agent,6 vs 5,-1.0,-1.733,-0.333,True,15 vs 15

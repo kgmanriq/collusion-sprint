@@ -1,5 +1,5 @@
 test,measure,comparison,difference,ci_low,ci_high,excludes_zero,markets
-C1 primary: collusion effect,S,5 vs 3,-0.17,-0.359,0.015,False,15 vs 15
+C1 primary: collusion effect,S,5 vs 3,-0.17,-0.355,0.015,False,15 vs 15
 C2 reliance (R),net_A_rounds_11_20,13 vs 12,1.2,-0.4,3.2,False,25 vs 25
 C3 harm,D,5 vs 3,-0.002,-0.004,0.001,False,15 vs 15
-C4 non-demand,S,5 vs 14,-1.053,-1.349,-0.734,True,15 vs 15
+C4 non-demand,S,5 vs 14,-1.053,-1.352,-0.74,True,15 vs 15
