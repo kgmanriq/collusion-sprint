@@ -1,0 +1,9 @@
+b = 200, p* = 0.3: average price of A in rounds 16-20 = 0.319, gap from p* = +0.019, bounce = 0.054
+b = 200, p* = 0.3: average price of A in rounds 16-20 = 0.316, gap from p* = +0.016, bounce = 0.060
+b = 200, p* = 0.1: average price of A in rounds 16-20 = 0.101, gap from p* = +0.001, bounce = 0.002
+b = 300, p* = 0.3: average price of A in rounds 16-20 = 0.309, gap from p* = +0.009, bounce = 0.036
+b = 300, p* = 0.3: average price of A in rounds 16-20 = 0.302, gap from p* = +0.002, bounce = 0.000
+b = 300, p* = 0.1: average price of A in rounds 16-20 = 0.102, gap from p* = +0.002, bounce = 0.003
+b = 500, p* = 0.3: average price of A in rounds 16-20 = 0.307, gap from p* = +0.007, bounce = 0.021
+b = 500, p* = 0.3: average price of A in rounds 16-20 = 0.303, gap from p* = +0.003, bounce = 0.011
+b = 500, p* = 0.1: average price of A in rounds 16-20 = 0.185, gap from p* = +0.085, bounce = 0.000

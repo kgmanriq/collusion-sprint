@@ -1,0 +1,16 @@
+from agent import build_agent_prompt
+from trading import Trader, run_market
+
+traders = [
+    Trader(1, build_agent_prompt(1, 0.30, wording="W1", allies=(3, 5)), kind="pro-A"),
+    Trader(2, build_agent_prompt(2, 0.30)),
+    Trader(3, build_agent_prompt(3, 0.30, wording="W1", allies=(1, 5)), kind="pro-A"),
+    Trader(4, build_agent_prompt(4, 0.30)),
+    Trader(5, build_agent_prompt(5, 0.30, wording="W1", allies=(1, 3)), kind="pro-A"),
+]
+
+data = run_market(traders, p_star=0.30, b=300, market_name="test_market_1")
+
+print("Final price of A:", round(data["final_price_A"], 3))
+for t in data["traders"]:
+    print("Trader", t["trader"], t["kind"], "| expected wealth:", round(t["expected_wealth"], 2), "| supports:", t["support"])
