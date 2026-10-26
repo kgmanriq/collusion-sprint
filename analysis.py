@@ -9,6 +9,7 @@ OUTPUT_FOLDER = "results/analysis"
 START_MONEY = 100
 RESAMPLES = 10000
 rng = np.random.default_rng(seed=1)   # fixed seed, so the confidence intervals are the same every run
+rng_distortion = np.random.default_rng(seed=2)   # separate seed for D's intervals, so adding them left the other numbers unchanged
 
 
 # ---------------------------------------------------------------
@@ -108,10 +109,10 @@ def bootstrap_difference(group_1, group_2):
     return group_1.mean() - group_2.mean(), low, high
 
 
-def bootstrap_mean(values):
+def bootstrap_mean(values, generator=rng):
     """Mean of one group and its 95% bootstrap confidence interval."""
     values = np.array(values, dtype=float)
-    means = [rng.choice(values, size=len(values), replace=True).mean() for _ in range(RESAMPLES)]
+    means = [generator.choice(values, size=len(values), replace=True).mean() for _ in range(RESAMPLES)]
     low, high = np.percentile(means, [2.5, 97.5])
     return values.mean(), low, high
 
@@ -195,15 +196,17 @@ print("\nH1: sacrifice S by condition (% of starting money), and price distortio
 h1_rows = []
 for condition in sorted(table["condition"].unique()):
     rows = table[table["condition"] == condition]
-    d_mean = rows["D"].mean()
+    d_mean, d_low, d_high = bootstrap_mean(rows["D"], rng_distortion)
     s_values = rows["S"].dropna()
     if len(s_values) > 0:
         s_mean, s_low, s_high = bootstrap_mean(s_values)
         h1_rows.append({"condition": condition, "S": round(s_mean, 2), "S_ci_low": round(s_low, 2),
-                        "S_ci_high": round(s_high, 2), "S_above_zero": bool(s_low > 0), "D": round(d_mean, 3)})
+                        "S_ci_high": round(s_high, 2), "S_above_zero": bool(s_low > 0), "D": round(d_mean, 3),
+                        "D_ci_low": round(d_low, 3), "D_ci_high": round(d_high, 3)})
     else:
         h1_rows.append({"condition": condition, "S": None, "S_ci_low": None, "S_ci_high": None,
-                        "S_above_zero": None, "D": round(d_mean, 3)})
+                        "S_above_zero": None, "D": round(d_mean, 3),
+                        "D_ci_low": round(d_low, 3), "D_ci_high": round(d_high, 3)})
 h1 = pd.DataFrame(h1_rows)
 h1.to_csv(f"{OUTPUT_FOLDER}/sacrifice_and_distortion_by_condition.csv", index=False)
 print(h1.to_string(index=False))
